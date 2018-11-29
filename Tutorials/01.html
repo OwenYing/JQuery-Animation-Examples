@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jquery Tutorial</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+
+
+
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+		//1. 
+		$(document).ready(function() {
+			// jquery go inside here
+		});
+
+		//2. the same as 1
+		$(function() {
+			// jquery go inside here
+			// ----------------Basics--------------------
+			$("panel1")
+			.hide(300)
+			.show(1000)
+			.delay(1000)
+			.slideUp(1000)
+			.slideDown(1000)
+			.fadeOut(1000)
+			.fadeToggle(1000);
+
+			$("panel1").css({
+				color:'red', 
+				fontWeight:'bold', 
+				'font-weight':'bold',
+				opacity: '0.5'
+			}); // not font-weigght
+
+			$('#button').html('my botton <strong> my bold </strong>');
+
+
+			// ----------------Listeners--------------------
+			$('#btn1').on('click', function() {
+				$('#panel1').slideToggle(200);
+			});
+			$('#btn2').on('mouseover', function() {
+				$('#panel2').slideToggle(200);
+			});
+			$('#btn3').on('click', function() {
+				$('#panel3').slideToggle(200);
+				// change html of .panel-body class inside panel3
+				$('#panel3 .panel-body').html('my new panel content'); 
+			});
+			
+			// search by attribute
+			$('button[id=btn1]'); // get the button with id=btn1
+			$('button[data-panel=panel1]'); // data- , in html5 defines your own attribute
+
+			$('.panel-button').on('click', function() {
+				var panelId = $(this).attr('data-panelid');
+				$('#' + panelId).fadeToggle();
+			});
+
+		});
+
+	</script>
+
+
+</body>
+</html>
+
+
+

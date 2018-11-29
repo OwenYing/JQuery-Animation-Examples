@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jquery Tutorial</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style type="text/css">
+		.special {
+			color : blue;
+		}
+	</style>
+</head>
+<body>
+
+	<div class='tab-panels'>
+		<ul class='tabs'>
+			<li class='active'>panel1</li>
+			<li>panel2</li>
+			<li>panel3</li>
+			<li>panel4</li>
+		</ul>
+
+		<div id='panel1' class='panel active'>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+		</div>
+		<div id='panel2' class='panel'>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+		</div>
+		<div id='panel3' class='panel'>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+		</div>
+		<div id='panel4' class='panel'>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+			content1 <br/>
+		</div>
+		
+	</div>
+
+
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+		
+		$(function() {
+			$('.tab-panels .tabs li').on('click', function() {
+				// var $variable: indicates jquery selector
+				var $panel = $(this).closest('.tab-panels');
+				$panel.find('.tabs li.active').removeClass('active');
+				$(this).addClass('active');
+
+				var panelToShow = $(this).attr('rel');
+				$panel.find('.panel.active').slideUp(300, showNextPanel);
+
+				function showNextPanel() {
+					$(this).removeClass('active');
+					$('#'+panelToShow.slideDown(300, function() {
+						$(this).addClass('active');
+					}));
+				}
+
+			});
+		});
+
+	</script>
+
+
+</body>
+</html>
+
+
+

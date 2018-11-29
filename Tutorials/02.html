@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jquery Tutorial</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style type="text/css">
+		.special {
+			color : blue;
+		}
+	</style>
+</head>
+<body>
+
+	<ul class='list'>
+		<li>one</li>
+		<li class='special'>two</li>
+		<li>three</li>
+		<li>
+			<ul class='sublist'>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul>
+		</li>
+	</ul>
+
+
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			// DOM Traversal
+			$('li').first();  // one
+			$('li').last(); // 3 (the last li of the entire page)
+			$('li').eq(0); 
+
+			$('ul:first').children(); // one two three
+			$('ul:first').siblings();
+
+			$('li:first').parent();
+			$('li').eq(4).parent().parent().prev(); // three
+			$('li').first().next();
+
+
+			$('li').on('click', function() {
+				$(this).next().remove();
+				$(this).removeClass('special');
+				$(this).siblings().addClass('special');
+				// going up through the chain to check which element has a class .list
+				$(this).closest('.list').addClass('special');
+			});
+
+			$('.list').on('click', function() {
+				$(this)
+				.find('li') //find is fast, search within the $()
+				.filter(':first')
+				.addClass('special');
+			});
+
+			$('.list').on('click', function() {
+				$(this)
+				.find('.special')
+				.remove();
+			});
+
+			$('li').on('click', function() {
+				$(this).hide();
+				if( $(this).is('.special') ) {
+					alert('special');
+				}
+				if( !$(this).is('.special') ) {
+					alert('not special');
+				}
+			});
+
+			$('li').on('click', function() {
+				console.log('clicked li');
+				if( $(this).parent.is('.sublist') ) {
+					$(this).hide();
+				}
+			});
+
+
+		});
+	</script>
+
+
+</body>
+</html>
+
+
+

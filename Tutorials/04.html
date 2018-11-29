@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jquery Tutorial</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style type="text/css">
+		.special {
+			color : blue;
+		}
+	</style>
+</head>
+<body>
+
+
+
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			// set interval
+			var myInterval = setInterval(function() {
+				console.log(new Date());
+			}, 1000);
+			clearInterval(myInterval); // stops the interval
+
+			// ------------------------animate
+
+			//1. configuration
+			var width = 720;
+			var animationSpeed = 1000;
+			var pause = 3000;
+
+			//2. cache DOM
+			var $slider = $('#slider');
+			var $slideContainer = $slide.find('.slides');
+
+
+			var interval;
+			function startSlider() {
+				interval = setInterval(function() {
+					$slideContainer.animate({
+						'margin-left': '-=' + width
+					}, animationSpeed);
+				}, pause);
+			}
+			function stopSlider() {
+				clearInterval(interval);
+			}
+
+			$slider.on('mouseenter', stopSlider).on('mouseleave', startSlider);
+
+			startSlider();
+
+		});
+	</script>
+
+
+</body>
+</html>
+
+
+
