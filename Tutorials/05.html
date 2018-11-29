@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jquery Tutorial</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style type="text/css">
+		.special {
+			color : blue;
+		}
+	</style>
+</head>
+<body>
+
+
+
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="mustache.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			// AJAX
+			var $ordersUI = $('#orders');
+			var orderTemplate = "<li>name: {{name}}, drink: {{drink}} </li>";
+			function addOrder(order) {
+				$ordersUI.append(Mustache.render(orderTemplate, order));
+			}
+			// Get JSON from API
+			/*
+			GET eg:
+			[
+				{
+					id: 1,
+					name: 'James',
+					drink: 'Coffee'
+				},
+				{
+					id: 2,
+					name: 'John',
+					drink: 'Latte'
+				},
+
+			]
+			*/
+			$.ajax({
+				type: 'GET',
+				url: '/api/orders',
+				success: function(orders) {
+					$.each(orders, function(index, order) {
+						// $ordersUI.append('<li> name:' + order.name + 'drink:' + order.drink +'</li>');
+						addOrder(order);
+					});
+				},
+				error: function() {
+					alert('error loading orders');
+				}
+			});
+
+			/*
+			POST request
+			sample post:
+			{
+				name: 'James',
+				drink: 'Coffee'
+			}
+			sample response:
+			{
+				id: 3,
+				name: 'James',
+				drink: 'Coffee',
+			}
+			*/
+			var $name = $('#name');
+			var $drink = $('#drink');
+			$('#add-order-btn').on('click', function() {
+				var order = {
+					name: $name.val(),
+					drink: $drink.val(),
+				};
+
+				$.ajax({
+					type: 'POST',
+					url: '/api/orders',
+					data: order,
+					success: function(newOrder) {
+						// $ordersUI.append('<li> name:' + newOrder.name + 'drink:' + newOrder.drink +'</li>');
+						addOrder(order);
+					},
+					error: function() {
+						alert('error saving order');
+					}
+				});
+			});
+
+			// Delegate
+			$ordersUI.delegate('.remove', 'click', function() {
+				var $li = $(this).closest('li');
+				$.ajax({
+					type: 'DELETE',
+					url: '/api/orders/' + $(this).attr('data-id'),
+					success: funtion() {
+						$li.remove();
+						//$(this) cannot be used in success funtion
+					},
+				});
+			});
+
+
+		});
+	</script>
+
+
+</body>
+</html>
+
+
+
